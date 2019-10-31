@@ -6,23 +6,31 @@ namespace Algorithm
     {
         static void Main(string[] args)
         {
+            int[] n = {8,1,45,21,22,37,6,3,2,79};
             // 클래스 선언
             var sol1 = new _20191023();
+            var sisSol2 = new _20191030();
             
             // 1번 문제
-            Console.WriteLine($"1회차 1번 문제 {sol1.solution1("asdfqdfamn")}");
+            // sisSol2.solution1(n);
             
             // 2번 문제
-            Console.WriteLine($"1회차 2번 문제 {sol1.solution2("이진홍씨 스터디 하시네욧", 25)}");
+            // sisSol2.solution2(10);
+            // Console.WriteLine($"1회차 2번 문제 {sol1.solution2("이지홍씨 스터디 하시네욧", 25)}");
 
             // 3번 문제
-            int[] array = {1, 5, 2, 6, 3, 7, 4};
-            int[,] commands = new int[3, 3]{{2, 5, 3}, {4, 4, 1}, {1, 7, 3}};
-            Console.WriteLine($"1회차 3번 문제 {sol1.solution3(array, commands)}");
+            // sisSol2.solution3(100);
 
             // 4번 문제
-            int[] n = {5,2,3,4,1};
-            sol1.solution4(n);
+            // sisSol2.solution4(n);
+
+            // 5번 문제
+
+            // 6번 문제
+            // sisSol2.solution6(153248976);
+
+            // 7번 문제
+            sisSol2.solution7(n);
         }
     }
 }
