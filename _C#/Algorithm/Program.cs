@@ -10,10 +10,10 @@ namespace Algorithm
             // 클래스 선언
             var sol1 = new _20191023();
             var sisSol2 = new _20191030();
-            
+            var sisImple = new implementsClass();
             // 1번 문제
             // sisSol2.solution1(n);
-            
+
             // 2번 문제
             // sisSol2.solution2(10);
             // Console.WriteLine($"1회차 2번 문제 {sol1.solution2("이지홍씨 스터디 하시네욧", 25)}");
@@ -30,7 +30,12 @@ namespace Algorithm
             // sisSol2.solution6(153248976);
 
             // 7번 문제
-            sisSol2.solution7(n);
+            //sisSol2.solution7(n);
+
+            foreach (int i in sisImple.QSort(n))
+            {
+                Console.Write(i + " ");
+            }
         }
     }
 }
