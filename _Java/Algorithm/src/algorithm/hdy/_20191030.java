@@ -46,8 +46,8 @@ public class _20191030 {
 		
 		System.out.println("7번 문제 ");
 		// 주어지는 값
-		int[] nums2 = {6, 2, 10};
-		solution7(nums2);
+		int[] nums2 = {3, 30, 34, 5, 9};	
+		solution7(nums2);	// 9 5 34 3 30
 
 	}
 
@@ -190,7 +190,7 @@ public class _20191030 {
 	static void solution5_2() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 //	    int n = Integer.parseInt(br.readLine());
-
+		// 나.. 나중에... 내...내일.. ㅠ
 		// 코드 작성
 	}
 	
@@ -231,23 +231,30 @@ public class _20191030 {
 	//	  * > 0 또는 양의 정수가 담긴 배열 n이 매개변수로 주어질 때, 순서를 재배치하여 만들 수 있는 가장 큰 수를 문자열로 바꾸어 return 하도록 solution 함수를 작성하시오.
 	static void solution7(int[] n){ 
 		Arrays.sort(n);
+		
 	    // {3, 30, 34, 5, 9}
+	    // 잘 모르겠음... 도움!!!! 헬프!!!! 도움 !!!! 
 	    
-	    int len =0,len2 =0;
 	    
-	    if(n.length % 2 ==0) {
-	    	len2 = len =n.length;
-	    }else {
-	    	len2 = len = n.length-1;
-	    }
-	   for(int i =0;i<len/2;i++) {
-		   	int temp = n[i];
-		   	n[i] = n[len2];
-		   	n[len2] = temp;
-			len2--;
+	   for(int i =0;i<n.length-1;i++) {
+		  for(int j =i;j<n.length-1;j++) {
+				String n1 = String.valueOf(n[j]);
+			   	String n2 = String.valueOf(n[j+1]); 
+			   	if(n1.compareTo(n2) > ) {
+			   		
+			   	}else {
+			   		if(n1.charAt(0) < n2.charAt(0)) {
+				   		int temp = n[i];
+				   		n[i] = n[i+1];
+				   		n[i+1] = temp;
+				   	}
+			   	}
+			   			   
+		  }
+		   	
 	   }
 	   
-	   System.out.println("정수를 이어 붙여 만든 가장 큰 수는 : ");
+	   System.out.print("정수를 이어 붙여 만든 가장 큰 수는 : ");
 	   for(int answer : n){
 		   System.out.print(answer);
 	   }
