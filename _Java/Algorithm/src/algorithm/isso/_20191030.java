@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * 1회차 문제풀이
+ * 2회차 문제풀이
  * 
  * @author 소인성
- * @date 2019-10-23
+ * @date 2019-10-30
  */
 public class _20191030
 {
