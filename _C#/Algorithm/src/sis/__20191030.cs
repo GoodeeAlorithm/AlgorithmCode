@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Algorithm
 {
-    public class _20191030
+    public class __20191030
     {
         public void solution1(int[] n)
         {

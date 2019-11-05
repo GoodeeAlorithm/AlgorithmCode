@@ -1,4 +1,4 @@
-package algorithm.isso;
+package algorithm.sis;
 
 import java.util.ArrayList;
 import java.util.Arrays;
