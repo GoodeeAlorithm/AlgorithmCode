@@ -252,7 +252,7 @@ public class _20191030
             @Override
             public int compare(String o1, String o2)
             {
-                return (o2 + 01).compareTo(o1 + o2);
+                return (o2 + o1).compareTo(o1 + o2);
             }
             
         });
