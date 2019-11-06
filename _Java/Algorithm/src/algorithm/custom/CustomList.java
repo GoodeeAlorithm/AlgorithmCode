@@ -59,6 +59,8 @@ public class CustomList
         if (maxInt < listSize)
             throw new IllegalArgumentException("숫자 범위의 갯수보다 리스트의 크기가 클 수 없습니다.");
         
+        long start = System.currentTimeMillis();
+        
         Set<Integer> generated = new LinkedHashSet<Integer>();
         
         while (generated.size() < listSize)
@@ -67,7 +69,15 @@ public class CustomList
             generated.add(next);
         }
         
-        return new ArrayList<Integer>(generated);
+        List<Integer> result = new ArrayList<Integer>(generated);
+        
+        long end = System.currentTimeMillis();
+        
+        long total = end - start;
+        
+        System.out.println("걸린 시간: " + total + " m/s");
+        
+        return result;
     }
     
     /**
@@ -94,16 +104,23 @@ public class CustomList
     {
         if (maxInt < arrSize)
             throw new IllegalArgumentException("숫자 범위의 갯수보다 배열의 크기가 클 수 없습니다.");
-        
+        long start = System.currentTimeMillis();
         Set<Integer> generated = new LinkedHashSet<Integer>();
-        
         while (generated.size() < arrSize)
         {
             Integer next = rng.nextInt(maxInt) + 1;
             generated.add(next);
         }
         
-        return Arrays.stream(Arrays.copyOf(generated.toArray(), generated.size(), Integer[].class)).mapToInt(i -> i).toArray();
+        int[] result = Arrays.stream(Arrays.copyOf(generated.toArray(), generated.size(), Integer[].class)).mapToInt(i -> i).toArray();
+        
+        long end = System.currentTimeMillis();
+        
+        long total = end - start;
+        
+        System.out.println("걸린 시간: " + total + " m/s");
+        
+        return result;
     }
     
     /**
@@ -128,7 +145,7 @@ public class CustomList
     {
         if (listSize < 1)
             throw new IllegalArgumentException("리스트의 크기는 1보다 작을 수 없습니다.");
-        
+        long start = System.currentTimeMillis();
         Set<String> generated = new LinkedHashSet<String>();
         
         StringBuffer sb = new StringBuffer();
@@ -148,7 +165,15 @@ public class CustomList
             generated.add(sb.toString());
         }
         
-        return new ArrayList<String>(generated);
+        List<String> result = new ArrayList<String>(generated);
+        
+        long end = System.currentTimeMillis();
+        
+        long total = end - start;
+        
+        System.out.println("걸린 시간: " + total + " m/s");
+        
+        return result;
     }
     
     /**
@@ -193,7 +218,15 @@ public class CustomList
             generated.add(sb.toString());
         }
         
-        return generated.toArray(new String[generated.size()]);
+        String[] result = generated.toArray(new String[generated.size()]);
+        
+        long end = System.currentTimeMillis();
+        
+        long total = end - start;
+        
+        System.out.println("걸린 시간: " + total + " m/s");
+        
+        return result;
     }
     
     /**
