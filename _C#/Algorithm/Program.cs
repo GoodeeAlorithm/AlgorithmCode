@@ -9,7 +9,7 @@ namespace Algorithm
             int[] n = {8,1,45,21,22,37,6,3,2,79};
             // 클래스 선언
             var sol1 = new _20191023();
-            var sisSol2 = new _20191030();
+            var sisSol2 = new __20191030();
             var sisImple = new implementsClass();
             // 1번 문제
             // sisSol2.solution1(n);

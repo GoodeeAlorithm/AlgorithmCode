@@ -146,6 +146,27 @@
 
 <br>
 
+## 분할-정복(Divide and Conquer) 알고리즘이란?
+- 해결하기 힘든 주 문제를 부 문제로 분할하여 해결하는 방법
+
+- 보통 재귀 함수(Recursive Function)로 구현
+  - 부 문제로 분할하여 적용할 알고리즘은 임의로 선택 가능
+  - 재귀 호출을 사용한 함수는 함수 호출 오버헤드 때문에 실행 속도 감소
+  - 빠른 실행이나 부 문제 해결 순서 선택을 위해 재귀 호출이 아닌 스택(Stack), 큐(Queue) 등의 자료구조를 이용하여 분할 정복법을 구현하는 것도 가능
+
+- 의사코드 표현
+    ```js
+    function F(x):
+    if F(x)의 문제가 간단 then:
+        return F(x)을 직접 계산한 값
+    else:
+        x 를 y1, y2로 분할
+        F(y1)과 F(y2)를 호출
+        return F(y1), F(y2)로부터 F(x)를 구한 값
+    ```
+
+<br>
+
 ## 합병 정렬
 <div align=center>
 
@@ -171,7 +192,7 @@
 
 <br>
 
-## 힙 정렬
+## ~~힙 정렬~~(개념만 인지)
 <div align=center>
 
 ![](img/Sorting_heapsort_anim.gif)
