@@ -240,7 +240,7 @@ public class _20191030 {
 		  for(int j =i;j<n.length-1;j++) {
 				String n1 = String.valueOf(n[j]);
 			   	String n2 = String.valueOf(n[j+1]); 
-			   	if(n1.compareTo(n2) > ) {
+			   	if(n1.compareTo(n2) > 0) {	//?
 			   		
 			   	}else {
 			   		if(n1.charAt(0) < n2.charAt(0)) {
