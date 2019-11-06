@@ -198,7 +198,7 @@ public class CustomList
     {
         if (arrSize < 1)
             throw new IllegalArgumentException("배열의 크기는 1보다 작을 수 없습니다.");
-        
+        long start = System.currentTimeMillis();
         Set<String> generated = new LinkedHashSet<String>();
         
         StringBuffer sb = new StringBuffer();
