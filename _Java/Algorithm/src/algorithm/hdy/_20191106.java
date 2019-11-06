@@ -1,6 +1,8 @@
 package algorithm.hdy;
 
-import java.util.Arrays; 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import algorithm.custom.CustomList;
 
@@ -20,6 +22,10 @@ public class _20191106 {
 		
 		System.out.println("선택");
 		System.out.println(Arrays.toString(selectSort(n)));
+		
+		List<Integer> list =  cl.randomIntList(100, 20);
+		System.out.println("퀵");
+		System.out.println(quickSort(list).toString());
 
 	}
 
@@ -45,9 +51,7 @@ public class _20191106 {
 
 	// 선택 정렬
 	public static int[] selectSort(int[] list) {
-		
-		
-		
+		 
 		int maxIndex= list.length-1;
 		
 		for (int i = list.length-1; i <=0; i--) {
@@ -61,6 +65,7 @@ public class _20191106 {
 			list[i] = list[maxIndex];
 			list[maxIndex] = temp;	
 		}
+		 
 		return list;
 	}
 
@@ -70,8 +75,37 @@ public class _20191106 {
 	}
 	
 	// 퀵 정렬
-	public static void quickSort(int[] list) {
+	public static List<Integer> quickSort(List<Integer> list) {
 		
+		if(list.size() <2) {
+			return list;
+		}
+		//43
+		int pivot = list.get(0);
+		
+		List<Integer> larger = new ArrayList<Integer>();
+		List<Integer> smaller = new ArrayList<Integer>();
+		
+		for (int i = 1; i < list.size(); i++) {
+			
+			if(list.get(i) > pivot) {
+				larger.add(list.get(i));
+			}else {
+				smaller.add(list.get(i));
+			}
+			
+		}
+		
+		System.out.println("작은 값 리스트 : " + smaller.toString());
+		System.out.println("기준 값"+pivot);
+		System.out.println("큰 값 리스트" + larger.toString());
+		// 18, 19
+		// 43, 75
+		List<Integer> result = quickSort(smaller); // 18 19
+		result.add(pivot); // 27
+		result.addAll(quickSort(larger)); // 43 75
+		
+		return result;
 	}
 
 }
