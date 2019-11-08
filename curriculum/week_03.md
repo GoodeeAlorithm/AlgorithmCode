@@ -69,6 +69,62 @@
 </div>
 
 <hr>
+
+```java
+// 방법 1
+public static void bubbleSort(int[] n)
+{
+    // 임시로 저장할 변수 선언
+    int temp = 0;
+    // 정렬이 필요한 배열의 길이만큼 루프
+    for (int i = 0; i < n.length; i++)
+    {
+        // 순회하면서 비교할 실제 루프
+        for (int j = i + 1; j < n.length; j++)
+        {
+            // 전 요소의 값이 크면
+            if (n[i] > n[j])
+            {
+                // 임시 변수에 작은 원소의 값을 저장하고
+                temp = n[j];
+                // 작은 원소의 위치에 큰 원소의 값을 젖아하고
+                n[j] = n[i];
+                // 큰 원소의 위치에 임시 변수의 값을 저장
+                n[i] = temp;
+            }
+        }
+    }
+}
+
+// 방법 2
+public static void bubbleSort2(int[] n)
+{
+    // flag 변수
+    boolean switched;
+    do
+    {
+        // 반복문을 끝낼 수 있게 false로 변환
+        switched = false;
+        // 정렬이 필요한 배열의 길이만큼 루프
+        for (int i = 0; i < n.length - 1; i++)
+        {
+            if (n[i + 1] < n[i])
+            {
+                // 임시 변수를 선언하면서 작은 원소 값을 저장하고
+                int tmp = n[i + 1];
+                // 작은 원소의 위치에 큰 원소의 값을 젖아하고
+                n[i + 1] = n[i];
+                // 큰 원소의 위치에 임시 변수의 값을 저장
+                n[i] = tmp;
+                // 교환이 되었으므로 flag를 true로 변환하여 루프 반복
+                switched = true;
+            }
+        }
+    // 교환이 없을 때까지 반복
+    } while (switched);
+}
+```
+
 <br>
 
 ## 삽입 정렬
@@ -95,6 +151,35 @@
 </div>
 
 <hr>
+
+```java
+public static void insertionSort(int[] n)
+{
+    // 정렬이 필요한 배열의 길이만큼 루프, 2번째 원소부터 시작하므로 i 는 1로 초기화
+    for (int i = 1; i < n.length; i++)
+    {
+        // 루프하며 비교할 원소
+        int key = n[i];
+        // 비교 대상이 되는 i 보다 앞에 있는 원소의 위치
+        int j = i - 1;
+        // j 가 0보다 작아질 때까지 반복
+        while (j >= 0)
+        {
+            // 비교할 원소 값보다 비교 대상의 값이 크면
+            if(n[j] > key)
+            {
+                // 비교 대상의 값을 key와 n[j] 사이에 삽입
+                n[j + 1] = n[j];
+                // j 감소
+                j--;
+            }
+        }
+        // 루프가 끝나면 key 값을 삽입
+        n[j + 1] = key;
+    }
+}
+```
+
 <br>
 
 ## 선택 정렬
@@ -122,6 +207,36 @@
 </div>
 
 <hr>
+
+```java
+public static void selectionSort(int[] n)
+{
+    // 임시로 저장할 변수 선언
+    int temp = 0;
+
+    // 정렬이 필요한 배열의 길이만큼 루프
+    for (int i = 0; i < n.length; i++)
+    {
+        // 최솟값의 위치를 저장할 변수
+        int min = i;
+        // 배열의 끝에서부터 i 위치까지 비교할 루프
+        for (int j = n.length - 1; j > i; j--)
+        {
+            // 비교하는 값이 최솟값보다 작으면
+            if (n[j] < n[min])
+                // 서로의 위치 값을 변경
+                min = j;
+        }
+        // 임시 변수에 현재 값 저장
+        temp = n[i];
+        // i의 원소 값은 최솟값이 되어야 하므로 교환
+        n[i] = n[min];
+        // 최솟값이었던 원소에 임시 변수의 값을 저장
+        n[min] = temp;
+    }
+}
+```
+
 <br>
 
 ## 퀵 정렬
@@ -146,6 +261,101 @@
 
 <br>
 
+<div align=center>
+
+![](img/05.JPG)
+
+</div>
+
+<hr>
+
+```java
+// 퀵 정렬 : 리스트 형태
+public static List<Integer> quickSort(List<Integer> n)
+{
+    // 재귀를 끝낼 조건, 리스트의 크기가 1이하라면 정렬할 필요가 없음
+    if (n.size() < 2)
+        return n;
+    
+    // 임의의 기준 정의
+    int pivot = n.get(0);
+    
+    // 피봇을 기준으로 왼쪽에 위치할 리스트
+    List<Integer> lower = new ArrayList<Integer>();
+    // 피봇을 기준으로 오른쪽에 위치할 리스트
+    List<Integer> higher = new ArrayList<Integer>();
+    
+    // 정렬이 필요한 리스트의 크기만큼 루프, 피봇을 0으로 잡았으니 i 는 1부터 시작
+    for (int i = 1; i < n.size(); i++)
+    {
+        // 피봇보다 현재의 값이 작으면
+        if (pivot > n.get(i))
+            // 왼쪽에 추가
+            lower.add(n.get(i));
+        else
+            // 아니라면 오른쪽에 추가
+            higher.add(n.get(i));
+    }
+    
+    // 왼쪽에 위치하는 리스트를 재귀하여 정렬된 형태로 구현
+    List<Integer> answer = quickSort(lower);
+    // 피봇의 값은 중간에 위치해야함
+    answer.add(pivot);
+    // 나머지의 값은 오른쪽에 위치하므로 전체 리스트를 합침
+    answer.addAll(quickSort(higher));
+    
+    // 합친 리스트를 반환
+    return answer;
+}
+
+// 퀵 정렬 : 배열 형태
+public static void quickSort(int n[], int lower, int higher)
+{
+    // lower의 값이 higher의 크기보다 크다면
+    if (lower < higher)
+    {
+        // 피봇은 배열을 분할하여 반환된 값으로 선언
+        int pivot = partition(n, lower, higher);
+        
+        // 왼쪽에 위치하는 배열을 재귀하여 정렬
+        quickSort(n, lower, pivot - 1);
+        // 오른쪽에 위치하는 배열을 재귀하여 정렬
+        quickSort(n, pivot + 1, higher);
+    }
+    
+}
+
+// 퀵 정렬 : 재귀호출(분할)
+public static int partition(int[] n, int lower, int higher)
+{
+    // 피봇의 값은 배열의 중앙
+    int pivot = n[(lower + higher) / 2];
+    // 왼쪽 기준 값이 오른쪽 기준 값보다 작을 때까지 반복
+    while (lower < higher)
+    {
+        // 피봇보다 왼쪽의 원소가 작다면 lower를 증가
+        while ((n[lower] < pivot) && (lower < higher))
+            lower++;
+        // 피봇보다 오른쪽의 원소가 크다면 higher를 감소
+        while ((n[higher] > pivot) && (lower < higher))
+            higher--;
+        
+        if (lower < higher)
+        {
+            // 교환
+            int temp = n[lower];
+            n[lower] = n[higher];
+            n[higher] = temp;
+        }
+    }
+
+    // while문이 끝나는 시점은 lower가 higher와 같아질 때
+    return lower;
+}
+```
+
+<br>
+
 ## 분할-정복(Divide and Conquer) 알고리즘이란?
 - 해결하기 힘든 주 문제를 부 문제로 분할하여 해결하는 방법
 
@@ -165,6 +375,7 @@
         return F(y1), F(y2)로부터 F(x)를 구한 값
     ```
 
+<hr>
 <br>
 
 ## 합병 정렬
@@ -186,9 +397,88 @@
 
 <div align=center>
 
-![](img/05.JPG)
+![](img/06.JPG)
 
 </div>
+
+<hr>
+
+```java
+// 병합 정렬 호출
+public static void mergeSort(int[] arr)
+{
+    // 정렬에 사용할 동일한 길이의 배열 선언
+    int[] temp = new int[arr.length];
+    // 재귀함수 호출
+    mergeSort(arr, temp, 0, arr.length - 1);
+}
+
+// 병합 정렬 시작
+public static void mergeSort(int[] arr, int[] temp, int start, int end)
+{
+    // 시작 위치 값이 종료 위치 값보다 작을 때까지
+    if (start < end)
+    {
+        // 중앙값 변수 선언
+        int mid = (start + end) / 2;
+        // 처음부터 중앙값까지의 원소를 재귀하여 정렬
+        mergeSort(arr, temp, start, mid);
+        // 중앙값 이후부터 끝까지의 원소를 재귀하여 정렬
+        mergeSort(arr, temp, mid + 1, end);
+        // 정렬된 배열을 병합
+        merge(arr, temp, start, mid, end);
+    }
+}
+
+// 정렬된 배열 병합 실행
+public static void merge(int[] arr, int[] temp, int start, int mid, int end)
+{
+    // 배열을 그대로 복사
+    // java 의 경우 Arrays.copyOf 쓰면 됨
+    for (int i = start; i <= end; i++)
+    {
+        temp[i] = arr[i];
+    }
+
+    // 왼쪽의 시작 위치 값 저장
+    int part1 = start;
+    // 오른쪽의 시작 위치 값 저장
+    int part2 = mid + 1;
+    // 절대 위치 값 저장
+    int index = start;
+
+    // 왼쪽 시작 위치 값이 중앙에 다다르거나 오른쪽 시작 위치 값이 끝에 다다를 때까지
+    while (part1 <= mid && part2 <= end)
+    {
+        // 왼쪽과 오른쪽의 원소 값을 비교
+        if (temp[part1] <= temp[part2])
+        {
+            // 왼쪽이 작거나 같으면 실제 배열의 절대 위치에 값을 저장하고
+            arr[index] = temp[part1];
+            // 왼쪽 시작 위치 값을 증가
+            part1++;
+        }
+        // 아니라면
+        else
+        {
+            // 실제 배열의 절대 위치에 오른쪽 시작 값을 저장하고
+            arr[index] = temp[part2];
+            // 오른쪽 시작 위치 값을 증가
+            part2++;
+        }
+        // 루프가 돌 때마다 절대 위치값을 증가
+        index++;
+    }
+
+    // part1은 while 루프가 끝난 시점이므로 mid와 같거나 작은 값임
+    for (int i = 0; i <= mid - part1; i++)
+    {
+        // 실제 배열의 절대 위치에 i 값을 더한 위치는 중앙과 같음
+        // 값을 옮겨 담아서 저장
+        arr[index + i] = temp[part1 + i];
+    }
+}
+```
 
 <br>
 
@@ -206,6 +496,22 @@
 3. 가장 큰 수(루트에 위치)를 가장 작은 수와 교환한다.
 4. 2와 3을 반복한다.
 
+<br>
+
+<div align=center>
+
+<h2> 삽입 </h2>
+
+![](img/07.JPG)
+
+<br>
+<h2> 삭제 </h2>
+
+![](img/08.JPG)
+
+</div>
+
+<hr>
 <br>
 
 # 3주차 - 과제(정렬)

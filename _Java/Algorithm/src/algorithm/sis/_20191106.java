@@ -22,17 +22,20 @@ public class _20191106 extends CustomList
     
     public static void main(String[] args)
     {
-        int[] n = randomIntArray(1001, 1000);
-        List<Integer> n2 = randomIntList();
+        int[] n = randomIntArray();
+        //        List<Integer> n2 = randomIntList();
         
         // 정렬 시작
         System.out.println("정렬 전 : " + Arrays.toString(n));
+        //        System.out.println("정렬 전 : " + n2.toString());
         start = System.currentTimeMillis();
-        bubbleSort(n);
+        mergeSort(n);
         System.out.println("정렬 시간 : " + (System.currentTimeMillis() - start) + " m/s");
         System.out.println("정렬 후 : " + Arrays.toString(n));
+        //        System.out.println("정렬 후 : " + n2.toString());
     }
     
+    // 기본적인 정렬 방법(인접인자를 비교하진 않음)
     public static int[] bubbleSort(int[] n)
     {
         int temp = 0;
@@ -60,6 +63,26 @@ public class _20191106 extends CustomList
         return n;
     }
     
+    // 인접인자를 비교하는 버블정렬
+    public static void bubbleSort2(int[] n)
+    {
+        boolean nSwitched;
+        do
+        {
+            nSwitched = false;
+            for (int i = 0; i < n.length - 1; i++)
+            {
+                if (n[i + 1] < n[i])
+                {
+                    int tmp = n[i + 1];
+                    n[i + 1] = n[i];
+                    n[i] = tmp;
+                    nSwitched = true;
+                }
+            }
+        } while (nSwitched);
+    }
+    
     public static void insertionSort(int[] n)
     {
         int temp = 0;
@@ -77,6 +100,29 @@ public class _20191106 extends CustomList
         }
     }
     
+    public static void insertionSort2(int[] n)
+    {
+        // 정렬이 필요한 배열의 길이만큼 루프, 2번째 원소부터 시작하므로 i 는 1로 초기화
+        for (int i = 1; i < n.length; i++)
+        {
+            // 루프하며 비교할 원소
+            int key = n[i];
+            // 비교 대상이 되는 i 보다 앞에 있는 원소의 위치
+            int j = i - 1;
+            // j 가 0보다 작아질 때까지 반복
+            while (j >= 0)
+            {
+                //
+                if (n[j] > key)
+                {
+                    n[j + 1] = n[j];
+                    j--;
+                }
+            }
+            n[j + 1] = key;
+        }
+    }
+    
     public static void selectionSort(int[] n)
     {
         int temp = 0;
@@ -88,7 +134,7 @@ public class _20191106 extends CustomList
                 if (n[j] < n[min])
                     min = j;
             }
-            temp = i;
+            temp = n[i];
             n[i] = n[min];
             n[min] = temp;
         }
@@ -156,5 +202,52 @@ public class _20191106 extends CustomList
         }
         
         return lower;
+    }
+    
+    // 병합 정렬
+    public static void mergeSort(int[] arr)
+    {
+        int[] temp = new int[arr.length];
+        mergeSort(arr, temp, 0, arr.length - 1);
+    }
+    
+    public static void mergeSort(int[] arr, int[] temp, int start, int end)
+    {
+        if (start < end)
+        {
+            int mid = (start + end) / 2;
+            mergeSort(arr, temp, start, mid);
+            mergeSort(arr, temp, mid + 1, end);
+            merge(arr, temp, start, mid, end);
+        }
+    }
+    
+    public static void merge(int[] arr, int[] temp, int start, int mid, int end)
+    {
+        for (int i = start; i <= end; i++)
+        {
+            temp[i] = arr[i];
+        }
+        int part1 = start;
+        int part2 = mid + 1;
+        int index = start;
+        while (part1 <= mid && part2 <= end)
+        {
+            if (temp[part1] <= temp[part2])
+            {
+                arr[index] = temp[part1];
+                part1++;
+            }
+            else
+            {
+                arr[index] = temp[part2];
+                part2++;
+            }
+            index++;
+        }
+        for (int i = 0; i <= mid - part1; i++)
+        {
+            arr[index + i] = temp[part1 + i];
+        }
     }
 }
