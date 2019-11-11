@@ -82,10 +82,10 @@
     List<String> fruits = new ArrayList<String>();
 
     // 정렬할 데이터
-    fits.add("Pineapple");
-    fits.add("Apple");
-    fits.add("Orange");
-    fits.add("Banana");  
+    fruits.add("Pineapple");
+    fruits.add("Apple");
+    fruits.add("Orange");
+    fruits.add("Banana");  
 
     Collections.sort(fruits);
 
@@ -274,9 +274,224 @@ public class test()
 <br>
 
 ## C#의 정렬
+### 기본 타입 데이터의 정렬
+- Array 클래스는 primitive 타입 데이터를 위한 정렬 메서드 제공
+    ```cs
+    // 정렬할 데이터
+    int[] data = new int[capacity];
 
+    // data[0]에서 data[capacity-1]까지 데이터가 꽉 차 있는 경우
+    Array.Sort(data);
+    // data[0]에서 data[size-1]까지 size개의 데이터만 있는 경우
+    Array.Sort(data, 0, size);
+    ```
+    - int 이외의 다른 primitive 타입 데이터(double, char)에 대해서도 제공
 
+<br>
 
+### 객체의 정렬 : 문자열
+- primitive 타입 데이터와 마찬가지로 Array.Sort 메서드로 정렬
+    ```cs
+    // 정렬할 데이터
+    String[] fruits = new String[] {"pineapple", "apple", "orange", "banana"};
+
+    Array.Sort(fruits);
+
+    foreach(String name in fruits)
+        Console.WriteLine(name);
+    ```
+
+<br>
+
+### ArrayList 정렬 : 문자열
+- Sort() 메서드로 정렬
+    ```cs
+    // 정렬할 데이터의 저장공간
+    ArrayList fruits = new ArrayList();
+
+    // 정렬할 데이터
+    fruits.Add("Pineapple");
+    fruits.Add("Apple");
+    fruits.Add("Orange");
+    fruits.Add("Banana");  
+
+    fruits.Sort();
+
+    foreach(String name in fruits)
+        Console.WriteLine(name);
+    ```
+
+<br>
+
+### 객체의 정렬 : 사용자 정의 객체
+#### 오류가 나는 정렬
+```cs
+// 사용자 정의 객체 생성
+public class Fruit
+{       
+    public String name;
+    public int quantity;
+
+    public Fruit(String name, int quantity)
+    {
+        this.name = name;
+        this.quantity = quantity;
+    }
+}
+
+//====================================================//
+
+// 실행 테스트 클래스
+public class test()
+{
+    public static void Main(string[] args)
+    {
+        Fruit[] fruits = new Fruit[4];
+
+        fruits[0] = new Fruit("Pineapple", 70);
+        fruits[1] = new Fruit("Apple", 100);
+        fruits[2] = new Fruit("Orange", 80);
+        fruits[3] = new Fruit("Banana", 90);
+
+        Array.Sort(fruits);
+
+        foreach (Fruit member in fruits)
+        {
+            Console.WriteLine(member);
+        }
+    }
+}
+```
+
+<br>
+
+#### 오류가 나지 않는 정렬
+- 이름순 정렬
+    ```cs
+    // 사용자 정의 객체 생성, IComparable 구현
+    public class Fruit : IComparable<_Fruit>
+    {       
+        public String name;
+        public int quantity;
+
+        public Fruit(String name, int quantity)
+        {
+            this.name = name;
+            this.quantity = quantity;
+        }
+
+        // 정렬을 위한 객체 구현
+        public int CompareTo(_Fruit o)
+        {
+            return name.CompareTo(o.name);
+        }
+    }
+
+    //====================================================//
+
+    // 실행 테스트 클래스, 위와 동일하므로 생략
+    ```
+
+- 재고 수량별 정렬
+    ```cs
+    // 사용자 정의 객체 생성, IComparable 구현
+    public class Fruit : IComparable<_Fruit>
+    {       
+        public String name;
+        public int quantity;
+
+        public Fruit(String name, int quantity)
+        {
+            this.name = name;
+            this.quantity = quantity;
+        }
+
+        // 정렬을 위한 객체 구현
+        public int CompareTo(_Fruit o1, _Fruit o2)
+        {
+            return o1.quantity - o2.quantity;
+        }
+    }
+
+    //====================================================//
+
+    // 실행 테스트 클래스, 위와 동일하므로 생략
+    ```
+
+#### 하나의 객체 타입에 2가지 이상의 기준으로 정렬
+```
+1. Comparer 클래스 extends
+2. Compare 메서드를 override 하는 새로운 이름 없는 클래스를 정의
+3. 해당 클래스의 객체를 생성한다.
+
+- 그렇다면 Comparer 객체들은 어디에 둘 것인가?
+    : 데이터 객체의 member로 둔다.
+    : 정렬 시 Array.sort(fruits, new xxxComparer()); 로 사용한다.
+```
+- **Comparer**의 사용
+    ```cs
+    public class Fruit
+    {
+        public String name;
+        
+        public int quantity;
+        
+        public Fruit(String name, int quantity)
+        {
+            
+            this.name = name;
+            
+            this.quantity = quantity;
+            
+        }
+        
+        // Comparer의 익명 클래스 정의 후 Compare 메서드 재정의(이름순)
+        public class nameComparer : Comparer<Fruit>
+        {
+            public override int Compare(Fruit o1, Fruit o2)
+            {
+                return String.Compare(o1.name, o2.name);
+            }
+        }
+        
+        // Comparer의 익명 클래스 정의 후 Compare 메서드 재정의(재고 수량별)
+        public class quantityComparer : Comparer<Fruit>
+        {
+            public override int Compare(Fruit o1, Fruit o2)
+            {
+                return o1.quantity - o2.quantity;
+            }
+        }
+        
+    }
+
+    //====================================================//
+
+    // 실행 테스트 클래스
+    public class test()
+    {
+        public static void Main(string[] args)
+        {
+            Fruit[] fruits = new Fruit[4];
+
+            fruits[0] = new Fruit("Pineapple", 70);
+            fruits[1] = new Fruit("Apple", 100);
+            fruits[2] = new Fruit("Orange", 80);
+            fruits[3] = new Fruit("Banana", 90);
+
+            Array.Sort(fruits, new nameComparer());
+            // OR
+            Array.Sort(fruits, new quantityComparer());
+
+            foreach (Fruit member in fruits)
+            {
+                Console.WriteLine(member);
+            }
+        }
+    }
+    ```
+
+<hr>
 <br>
 
 ## 거품 정렬

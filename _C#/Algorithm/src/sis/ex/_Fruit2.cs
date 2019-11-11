@@ -14,7 +14,7 @@ namespace Algorithm
             fruits[2] = new _Fruit2("Orange", 80);
             fruits[3] = new _Fruit2("Banana", 90);
 
-            Array.Sort(fruits);
+            Array.Sort(fruits, new nameComparer());
 
             foreach (_Fruit2 member in fruits)
             {
