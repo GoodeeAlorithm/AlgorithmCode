@@ -45,6 +45,240 @@
 <hr>
 <br>
 
+## Java의 정렬
+### 기본 타입 데이터의 정렬
+- Arrays 클래스는 primitive 타입 데이터를 위한 정렬 메서드 제공
+    ```java
+    // 정렬할 데이터
+    int[] data = new int[capacity];
+
+    // data[0]에서 data[capacity-1]까지 데이터가 꽉 차 있는 경우
+    Arrays.sort(data);
+    // data[0]에서 data[size-1]까지 size개의 데이터만 있는 경우
+    Arrays.sort(data, 0, size);
+    ```
+    - int 이외의 다른 primitive 타입 데이터(double, char)에 대해서도 제공
+
+<br>
+
+### 객체의 정렬 : 문자열
+- primitive 타입 데이터와 마찬가지로 Arrays.sort 메서드로 정렬
+    ```java
+    // 정렬할 데이터
+    String[] fruits = new String[] {"pineapple", "apple", "orange", "banana"};
+
+    Arrays.sort(fruits);
+
+    for(String name : fruits)
+        System.out.println(name);
+    ```
+
+<br>
+
+### ArrayList 정렬 : 문자열
+- Collections.sort 메서드로 정렬
+    ```java
+    // 정렬할 데이터의 저장공간
+    List<String> fruits = new ArrayList<String>();
+
+    // 정렬할 데이터
+    fits.add("Pineapple");
+    fits.add("Apple");
+    fits.add("Orange");
+    fits.add("Banana");  
+
+    Collections.sort(fruits);
+
+    for(String name: fruits)
+        System.out.println(name);
+    ```
+
+<br>
+
+### 객체의 정렬 : 사용자 정의 객체
+#### 오류가 나는 정렬
+```java
+// 사용자 정의 객체 생성
+public class Fruit
+{       
+    public String name;
+    
+    public int quantity;
+    
+    public Fruit(String name, int quantity)
+    {
+        
+        this.name = name;
+        
+        this.quantity = quantity;
+        
+    }
+}
+
+//====================================================//
+
+// 실행 테스트 클래스
+public class test()
+{
+    public static void main(String[] args)
+    {
+        Fruit[] fruits = new Fruit[4];
+        
+        fruits[0] = new Fruit("Pineapple", 70);
+        fruits[1] = new Fruit("Apple", 100);
+        fruits[2] = new Fruit("Orange", 80);
+        fruits[3] = new Fruit("Banana", 90);
+        
+        Arrays.sort(fruits);
+        
+    }
+}
+```
+
+<br>
+
+#### 오류가 나지 않는 정렬
+- 이름순 정렬
+    ```java
+    // 사용자 정의 객체 생성
+    public class Fruit implements Comparable<Fruit>
+    {
+        public String name;
+        
+        public int quantity;
+        
+        public Fruit(String name, int quantity)
+        {
+            
+            this.name = name;
+            
+            this.quantity = quantity;
+            
+        }
+        
+        @Override
+        public int compareTo(Fruit o)
+        {
+            return name.compareTo(o.name);
+        }
+        
+    }
+
+    //====================================================//
+
+    // 실행 테스트 클래스, 위와 동일하므로 생략
+    ```
+
+- 재고 수량별 정렬
+    ```java
+    // 사용자 정의 객체 생성
+    public class Fruit implements Comparable<Fruit>
+    {
+        public String name;
+        
+        public int quantity;
+        
+        public Fruit(String name, int quantity)
+        {
+            
+            this.name = name;
+            
+            this.quantity = quantity;
+            
+        }
+        
+        @Override
+        public int compareTo(Fruit o)
+        {
+            return quantity - o.quantity;
+        }
+        
+    }
+
+    //====================================================//
+
+    // 실행 테스트 클래스, 위와 동일하므로 생략
+    ```
+
+#### 하나의 객체 타입에 2가지 이상의 기준으로 정렬
+```
+1. Comparator 클래스 extends
+2. compare 메서드를 Override하는 새로운 이름 없는 클래스를 정의
+3. 해당 클래스의 객체를 생성한다.
+
+- 그렇다면 Comparator 객체들은 어디에 둘 것인가?
+    : 데이터 객체의 static member로 둔다.
+    : 정렬 시 Arrays.sort(fruits, Fruit.xxxComparator); 로 사용한다.
+```
+- **Comparator**의 사용
+    ```java
+    public class Fruit
+    {
+        public String name;
+        
+        public int quantity;
+        
+        public Fruit(String name, int quantity)
+        {
+            
+            this.name = name;
+            
+            this.quantity = quantity;
+            
+        }
+        
+        // Comparator의 익명 클래스 정의 후 compare 메서드 재정의(이름순)
+        public static Comparator<Fruit> nameComparator = new Comparator<Fruit>() {
+            
+            @Override
+            public int compare(Fruit o1, Fruit o2)
+            {
+                return o1.name.compareTo(o1.name);
+            }
+        };
+        
+        // Comparator의 익명 클래스 정의 후 compare 메서드 재정의(재고 수량별)
+        public static Comparator<Fruit> quantityComparator = new Comparator<Fruit>() {
+            
+            @Override
+            public int compare(Fruit o1, Fruit o2)
+            {
+                return o1.quantity - o2.quantity;
+            }
+        };
+        
+    }
+
+    //====================================================//
+
+    // 실행 테스트 클래스
+    public class test()
+    {
+        public static void main(String[] args)
+        {
+            Fruit[] fruits = new Fruit[4];
+            
+            fruits[0] = new Fruit("Pineapple", 70);
+            fruits[1] = new Fruit("Apple", 100);
+            fruits[2] = new Fruit("Orange", 80);
+            fruits[3] = new Fruit("Banana", 90);
+            
+            Arrays.sort(fruits, nameComparator);
+            // OR
+            Arrays.sort(fruits, quantityComparator);
+        }
+    }
+    ```
+
+<hr>
+<br>
+
+## C#의 정렬
+
+
+
+<br>
+
 ## 거품 정렬
 <div align=center>
 
