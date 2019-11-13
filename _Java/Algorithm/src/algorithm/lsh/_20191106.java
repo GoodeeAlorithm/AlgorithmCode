@@ -70,11 +70,11 @@ public class _20191106 {
 			for(int j=i+1; j<n.length; j++) {
 				if( n[j] > n[index]) {
 					j = index; //  n 번째와 n+1 번째를 n.length 만큼 비교 
-					
 				}
-				System.out.println(n[j]);
+				 // 최대 값
 			}
-			
+			n[index] = y;
+			System.out.println(y);
 		}
 	}
 }
