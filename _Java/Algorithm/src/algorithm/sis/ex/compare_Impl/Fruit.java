@@ -1,4 +1,4 @@
-package algorithm.sis.ex;
+package algorithm.sis.ex.compare_Impl;
 
 import java.util.Arrays;
 
