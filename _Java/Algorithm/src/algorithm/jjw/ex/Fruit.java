@@ -1,8 +1,13 @@
 package algorithm.jjw.ex;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
-public class Fruit
+
+
+// 1. 자연정렬 Comparable<Type>
+// 2. 사용자 임의 정렬 Comparator<Type>
+public class Fruit 
 {
     public static void main(String[] args)
     {
@@ -14,6 +19,9 @@ public class Fruit
         fruits[3] = new Fruit("Banana", 90);
         
         Arrays.sort(fruits);
+        
+        for(Fruit fr : fruits)
+            System.out.println(fr);
         
     }
     
@@ -29,6 +37,29 @@ public class Fruit
         this.quantity = quantity;
         
     }
+    
+    //이름 정렬
+    Comparator<Fruit> nameComp = new Comparator<Fruit>() {
+
+		@Override
+		public int compare(Fruit o1, Fruit o2) {
+			// TODO Auto-generated method stub
+			return o1.name.compareTo(o2.name);
+		}
+    	
+	};
+    
+	Comparator<Fruit> quantityComp = new Comparator<Fruit>() {
+
+		@Override
+		public int compare(Fruit o1, Fruit o2) {
+			// TODO Auto-generated method stub
+			return o2.name.compareTo(o1.name);
+		}
+		
+	};
+    
+    
     
     @Override
     public String toString()
