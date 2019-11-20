@@ -551,7 +551,8 @@
 
 <hr>
 
-## [3번 - 프로그래머스](https://programmers.co.kr/learn/courses/30/lessons/42748)
+## 정렬 문제 복습
+### [3번 - 프로그래머스](https://programmers.co.kr/learn/courses/30/lessons/42748)
 - 문제 설명
   - 배열 array의 i번째 숫자부터 j번째 숫자까지 자르고 정렬했을 때, k번째에 있는 수를 구하려 합니다.
 
@@ -570,8 +571,9 @@
   - commands의 각 원소는 길이가 3입니다.
 
 <hr>
+<br>
 
-## [4번 - 백준 알고리즘](https://www.acmicpc.net/problem/2108)
+### [4번 - 백준 알고리즘](https://www.acmicpc.net/problem/2108)
 - 문제
   - 수를 처리하는 것은 통계학에서 상당히 중요한 일이다. 통계학에서 N개의 수를 대표하는 기본 통계값에는 다음과 같은 것들이 있다. 단, N은 홀수라고 가정하자.
       ```
