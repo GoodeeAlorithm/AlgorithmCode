@@ -460,11 +460,144 @@
 <br>
 
 ### 스택의 구현
-```java
-```
+- Java 코드
+    ```java
+    import java.util.EmptyStackException;
 
-```cs
-```
+    public class Stack<T>
+    {
+        // 가장 마지막에 삽입된 데이터의 위치를 가리키는 포인터
+        private Node<T> top;
+        
+        // 스택의 크기
+        private int size = 0;
+        
+        // 데이터를 암시하는 클래스
+        private class Node<T>
+        {
+            // 데이터
+            private T data;
+            
+            // 다음 데이터를 암시하는 포인터
+            private Node<T> next;
+            
+            // 생성자, 처음 생성 시 스택의 데이터는 하나, 다음 데이터는 존재하지 않음
+            public Node(T input)
+            {
+                this.data = input;
+                this.next = null;
+            }
+        }
+        
+        // 가장 마지막의 데이터를 출력
+        public T pop()
+        {
+            if (top == null)
+            {
+                throw new EmptyStackException();
+            }
+            T item = top.data;
+            top = top.next;
+            size--;
+            return item;
+        }
+        
+        // 데이터를 추가
+        public void push(T input)
+        {
+            Node<T> newNode = new Node<T>(input);
+            newNode.next = top;
+            top = newNode;
+            size++;
+        }
+        
+        // 가장 마지막에 있는 데이터를 확인
+        public T peek()
+        {
+            if (top == null)
+            {
+                throw new EmptyStackException();
+            }
+            
+            return top.data;
+        }
+        
+        // 데이터가 비어있는지 확인
+        public boolean isEmpty()
+        {
+            return top == null;
+        }
+        
+    }
+    ```
+
+- C# 코드
+    ```cs
+    public class Stack
+    {
+        // 가장 마지막에 삽입된 데이터의 위치를 가리키는 포인터
+        private Node top;
+        
+        // 스택의 크기
+        private int size = 0;
+        
+        // 데이터를 암시하는 클래스
+        private class Node
+        {
+            // 데이터
+            public Object data;
+            
+            // 다음 데이터를 암시하는 포인터
+            public Node next;
+            
+            // 생성자, 처음 생성 시 스택의 데이터는 하나, 다음 데이터는 존재하지 않음
+            public Node(Object input)
+            {
+                this.data = input;
+                this.next = null;
+            }
+        }
+        
+        // 가장 마지막의 데이터를 출력
+        public Object pop()
+        {
+            if (top == null)
+            {
+                throw new InvalidOperationException();
+            }
+            Object item = top.data;
+            top = top.next;
+            size--;
+            return item;
+        }
+        
+        // 데이터를 추가
+        public void push(Object input)
+        {
+            Node newNode = new Node(input);
+            newNode.next = top;
+            top = newNode;
+            size++;
+        }
+        
+        // 가장 마지막에 있는 데이터를 확인
+        public Object peek()
+        {
+            if (top == null)
+            {
+                throw new InvalidOperationException();
+            }
+            
+            return top.data;
+        }
+        
+        // 데이터가 비어있는지 확인
+        public bool isEmpty()
+        {
+            return top == null;
+        }
+    }
+    ```
 
 <br>
 
@@ -475,7 +608,7 @@
 
 - FIFO(First In First Out), 선입선출 구조라고 하며 표를 사기 위한 대기 줄이라고 생각하면 쉽다.
   - 입력은 `enqueue`, 출력은 `dequeue`이다.
-  - `front` 는 가장 먼저 삽입된 데이터의 위치, `rear`는 가장 마지막에 삽입된 데이터의 위치를 가리킨다.
+  - `front` 는 가장 먼저 삽입된 데이터의 위치, `back`는 가장 마지막에 삽입된 데이터의 위치를 가리킨다.
   - `peek`은 Front의 위치에 있는 데이터를 확인하는 것을 말한다.
 
 - 너비 우선 탐색(BFS)에서는 항상 가장 오래된 것을 선택해야하므로 큐를 사용하여 후보를 관리할 수 있다.
@@ -496,11 +629,171 @@
 <br>
 
 ### 큐의 구현
-```java
-```
+- Java 코드
+    ```java
+    import java.util.NoSuchElementException;
 
-```cs
-```
+    public class Queue<T>
+    {
+        // 가장 먼저 삽입된 데이터의 위치
+        private Node<T> front;
+        
+        // 가장 마지막에 삽입된 데이터의 위치
+        private Node<T> back;
+        //  private int size;
+        //  private Object[] queueArray;
+        
+        // 데이터를 암시하는 클래스
+        private class Node<T>
+        {
+            // 데이터
+            private T data;
+            
+            // 다음 데이터를 암시하는 포인터
+            private Node<T> next;
+            
+            public Node(T data)
+            {
+                this.data = data;
+                this.next = null;
+            }
+        }
+        
+        // 최근에 삽입된 데이터의 앞에 새로운 데이터를 추가
+        public void enqueue(T input)
+        {
+            Node<T> newNode = new Node<T>(input);
+            if (back != null)
+            {
+                back.next = newNode;
+            }
+            back = newNode;
+            if (front == null)
+            {
+                front = back;
+            }
+        }
+        
+        // 가장 최근의 데이터를 출력
+        public T dequeue()
+        {
+            if (front == null)
+            {
+                throw new NoSuchElementException();
+            }
+            
+            T data = front.data;
+            front = front.next;
+            
+            if (front == null)
+            {
+                back = null;
+            }
+            
+            return data;
+        }
+        
+        // 가장 먼저 삽입된 데이터 확인
+        public T peek()
+        {
+            if (front == null)
+            {
+                throw new NoSuchElementException();
+            }
+            return front.data;
+        }
+        
+        // 데이터가 비어있는지 확인
+        public boolean isEmpty()
+        {
+            return front == null;
+        }
+    }
+    ```
+
+- C# 코드
+    ```cs
+    public class Queue
+    {
+        // 가장 먼저 삽입된 데이터의 위치
+        private Node front;
+
+        // 가장 마지막에 삽입된 데이터의 위치
+        private Node back;
+
+        private int size = 0;
+
+        private class Node
+        {   
+            // 데이터
+            public Object data;
+
+            // 다음 데이터를 암시하는 포인터
+            public Node next;
+
+            public Node(Object input)
+            {
+                this.data = input;
+                this.next = null;
+            }
+        }
+
+        // 최근에 삽입된 데이터의 앞에 새로운 데이터를 추가
+        public void enqueue(Object input)
+        {
+            Node newNode = new Node(input);
+            if (back != null)
+            {
+                back.next = newNode;
+            }
+            back = newNode;
+            if (front == null)
+            {
+                front = back;
+            }
+
+            size++;
+        }
+
+        // 가장 최근의 데이터를 출력
+        public Object dequeue()
+        {
+            if (front == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            Object data = front.data;
+            front = front.next;
+
+            if (front == null)
+            {
+                back = null;
+            }
+
+            size--;
+
+            return data;
+        }
+
+
+        // 가장 먼저 삽입된 데이터 확인
+        public Object peek()
+        {
+            if (front == null)
+            {
+                throw new InvalidOperationException();
+            }
+            return front.data;
+        }
+
+        // 데이터가 비어있는지 확인
+        public bool isEmpty()
+        {
+            return front == null;
+        }
+    }
+    ```
 
 <br>
 
